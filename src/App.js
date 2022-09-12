@@ -5,48 +5,26 @@ import "./App.css";
 
 function App() {
   const [cal, setCal] = useState("");
-  const [result, setResult] = useState();
-
-  const [valueOne, setValueOne] = useState();
-  const [valueTwo, setValueTwo] = useState();
-  const [isOperator, setIsOperator] = useState(false);
+  const [result, setResult] = useState("");
 
   const calculate = (cal) => {
-    const data = cal.split("+", "-", "*", "/");
-    console.log(data);
+    setResult(eval(cal));
   };
 
   const input = (data) => {
+    if (data === "del") {
+      console.log("deleted");
+      const lastCharIndex = cal.length - 1;
+      return setCal(cal.slice(0, -1));
+    }
     setCal(cal + data);
-  };
-
-  const setValues = (val) => {
-    if (isOperator) {
-      setValueOne(val);
-    } else {
-      setValueTwo(val);
-    }
-  };
-
-  const calcResult = (a, b, op) => {
-    if (op === "*") {
-      return a * b;
-    }
-    if (op === "-") {
-      return a - b;
-    }
-    if (op === "+") {
-      return a + b;
-    }
-    if (op === "/") {
-      return a / b;
-    }
   };
 
   return (
     <>
       <div className="main">
         <Screen value={cal} />
+        <Screen value={result} />
         <div className="button-container">
           <Button button="1" input={input} />
           <Button button="2" input={input} />
@@ -63,6 +41,7 @@ function App() {
           <Button button="0" input={input} />
           <Button button="." input={input} />
           <Button button="/" input={input} />
+          <Button button="del" input={input} />
           <Button button="=" input={input} calculate={calculate} value={cal} />
         </div>
       </div>
